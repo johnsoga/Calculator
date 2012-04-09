@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		831BAE12153131F600526CBA /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 831BAE11153131F600526CBA /* Stack.m */; };
+		831BAE1515313A4000526CBA /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 831BAE1415313A4000526CBA /* Queue.m */; };
 		839F9E2B14C4ED54006F1CDD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839F9E2A14C4ED54006F1CDD /* UIKit.framework */; };
 		839F9E2D14C4ED54006F1CDD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839F9E2C14C4ED54006F1CDD /* Foundation.framework */; };
 		839F9E2F14C4ED54006F1CDD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 839F9E2E14C4ED54006F1CDD /* CoreGraphics.framework */; };
@@ -20,6 +22,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		831BAE10153131F600526CBA /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
+		831BAE11153131F600526CBA /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
+		831BAE1315313A4000526CBA /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
+		831BAE1415313A4000526CBA /* Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
 		839F9E2614C4ED54006F1CDD /* MyCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		839F9E2A14C4ED54006F1CDD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		839F9E2C14C4ED54006F1CDD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -86,6 +92,10 @@
 				839F9E3914C4ED55006F1CDD /* CalculatorAppDelegate.h */,
 				839F9E3A14C4ED55006F1CDD /* CalculatorAppDelegate.m */,
 				839F9E3C14C4ED55006F1CDD /* MainStoryboard.storyboard */,
+				831BAE10153131F600526CBA /* Stack.h */,
+				831BAE11153131F600526CBA /* Stack.m */,
+				831BAE1315313A4000526CBA /* Queue.h */,
+				831BAE1415313A4000526CBA /* Queue.m */,
 				83E6DBB014C55C4000B45E1F /* CalculatorModel.h */,
 				83E6DBB114C55C4000B45E1F /* CalculatorModel.m */,
 				839F9E3F14C4ED55006F1CDD /* CalculatorViewController.h */,
@@ -140,7 +150,7 @@
 		839F9E1D14C4ED54006F1CDD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "Apple Inc. Retail";
 			};
 			buildConfigurationList = 839F9E2014C4ED54006F1CDD /* Build configuration list for PBXProject "MyCalculator" */;
@@ -182,6 +192,8 @@
 				839F9E3B14C4ED55006F1CDD /* CalculatorAppDelegate.m in Sources */,
 				839F9E4114C4ED55006F1CDD /* CalculatorViewController.m in Sources */,
 				83E6DBB214C55C4000B45E1F /* CalculatorModel.m in Sources */,
+				831BAE12153131F600526CBA /* Stack.m in Sources */,
+				831BAE1515313A4000526CBA /* Queue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,18 +7,43 @@
 //
 
 #import "CalculatorModel.h"
+#import "Stack.h"
+#import "Queue.h"
 
 @interface CalculatorModel()
-@property (nonatomic, strong) NSMutableArray *stack;
-@property (nonatomic, strong) NSMutableArray *queue;
--(int)isNumber:(NSString *)expression atIndex:(NSInteger)index;
+@property (nonatomic, strong) Stack *stack;
+@property (nonatomic, strong) Queue *queue;
+@property (nonatomic, strong) Stack *result;
+-(BOOL)isNumber:(NSString *)token;
 -(BOOL)isNegative:(NSString *)token atIndex:(NSInteger)index;
+-(void)shuntingYard:(NSString *)expression;
+-(BOOL)isOperator:(NSString *)token;
+-(void)doMath:(NSString *)token;
 @end
 
 
 @implementation CalculatorModel
 @synthesize stack = _stack;
 @synthesize queue = _queue;
+@synthesize result = _result;
+
+
+
+- (id) init {
+    
+    self = [super init];
+    
+    if (self) {
+        
+        _stack = [[Stack alloc] init];
+        _queue = [[Queue alloc] init];
+        _result = [[Stack alloc] init];
+
+    }
+    
+    return self;
+}
+
 
 -(BOOL)isNegative:(NSString *)token atIndex:(NSInteger)index {
     
@@ -40,53 +65,123 @@
     }
     
     return NO;
-;}
-
--(int)isNumber:(NSString *)expression atIndex:(NSInteger)index {
-    
-    NSString *value = [NSString stringWithFormat:@"%C", [expression characterAtIndex:index]];
-    
-    if([self isNegative:expression atIndex:index]) {
-        index = index + 1;
-    }
-    
-    while ([value isEqualToString:@"0"] || [value isEqualToString:@"1"] ||
-           [value isEqualToString:@"2"] || [value isEqualToString:@"3"] ||
-           [value isEqualToString:@"4"] || [value isEqualToString:@"5"] ||
-           [value isEqualToString:@"6"] || [value isEqualToString:@"7"] ||
-           [value isEqualToString:@"8"] || [value isEqualToString:@"9"]) {
-        
-        return 0;
-    }
-    
 }
+
+
+-(BOOL)isNumber:(NSString *)token {
+    
+    NSNumberFormatter *format = [[NSNumberFormatter alloc] init];
+    NSNumber *number;
+    
+    [format setNumberStyle:NSNumberFormatterDecimalStyle];
+    number = [format numberFromString:token];
+    
+    if (number != nil) {
+        return TRUE;
+    }
+    
+    return FALSE;
+}
+
+
+-(BOOL)isOperator:(NSString *)token {
+    
+    if ([token isEqualToString:@"/"]) {
+        return TRUE;
+    } else if ([token isEqualToString:@"*"]) {
+        return TRUE;
+    } else if ([token isEqualToString:@"+"]) {
+        return TRUE;
+    } else if ([token isEqualToString:@"-"]) {
+        return TRUE;
+    }
+    
+    return FALSE;
+}
+
+
+-(void)doMath:(NSString *)token {
+    
+    if ([token isEqualToString:@"+"]) {
+        double op2 = [[_result pop] doubleValue];
+        double op1 = [[_result pop] doubleValue];
+        [_result push:[NSNumber numberWithDouble:(op1 + op2)]];
+    } else if ([token isEqualToString:@"-"]) {
+        double op2 = [[_result pop] doubleValue];
+        double op1 = [[_result pop] doubleValue];
+        [_result push:[NSNumber numberWithDouble:(op1 - op2)]];
+    } else if ([token isEqualToString:@"*"]) {
+        double op2 = [[_result pop] doubleValue];
+        double op1 = [[_result pop] doubleValue];
+        [_result push:[NSNumber numberWithDouble:(op1 * op2)]];
+    } else if ([token isEqualToString:@"/"]) {
+        double op2 = [[_result pop] doubleValue];
+        double op1 = [[_result pop] doubleValue];
+        [_result push:[NSNumber numberWithDouble:(op1 / op2)]];
+    }
+}
+
 
 -(NSNumber *)evaluate:(NSString *)expression {
 
-    double result = 1337;
-    [self shuntingYard:expression];
+    id token;
     
-    return [NSNumber numberWithDouble:result];
+    [self shuntingYard:expression];
+
+    while (![_queue isEmpty]) {
+        
+        token = [_queue dequeue];
+        
+        if ([token isKindOfClass:[NSNumber class]]) {
+            if ([self isNumber:[token stringValue]]) {
+                
+                [_result push:token];
+            }
+        } else {
+            if ([self isOperator:token]) {
+             
+                [self doMath:token];
+            }
+        }
+    }
+    
+    return [_result pop];
 }
 
+
 -(void)shuntingYard:(NSString *)expression {
-    
-    NSInteger length = [expression length];
-    int index = 0;
-    unichar token;
+
+    NSUInteger length = [expression length];
+    NSInteger index = 0;
+    NSString *token;
+    NSArray *tokens;
+
+
+    tokens = [expression componentsSeparatedByString:@"_"];
+    length = [tokens count];
     
     while (index < length) {
-        token = [expression characterAtIndex:length];
-        //some code
         
-        if ([self isNumber:expression atIndex:index]) {
-            break;
+        token = [tokens objectAtIndex:index];
+        
+        if ([self isNumber:token]) {
+            [_queue enqueue:[NSNumber numberWithDouble:[token doubleValue]]];
+        } else if ([self isOperator:token]) {
+            while (![_stack isEmpty]) {
+                if ([self isOperator: [_stack peek]]) {
+                    [_queue enqueue:[_stack pop]];
+                }
+            }
+            [_stack push:token];
         }
-        
-        continue;
         index++;
-        NSLog(@"the Orrrannnnnnge chicken");
     }
+                    
+    while (![_stack isEmpty]) {
+        
+        [_queue enqueue:[_stack pop]];
+    }        
+}
     /*
     While there are tokens to be read:
     Read a token.
@@ -113,8 +208,5 @@
     Exit.
     */
     
-    
-}
-
 
 @end

@@ -12,7 +12,5 @@
 @interface CalculatorModel : NSObject
 
 - (NSNumber *)evaluate:(NSString *)expression;
-- (void)shuntingYard:(NSString *)expression;
-
 
 @end
