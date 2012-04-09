@@ -75,6 +75,14 @@
 }
 
 
+- (IBAction)negativePressed:(UIButton *)sender {
+    
+    if (![self isTypingANumber]) {
+        [self setIsTypingANumber:TRUE];
+        self.display.text = [self.display.text stringByAppendingString:@"-"];
+        self.equation = [self.equation stringByAppendingString:@"-"];
+    }
+}
 
 
 - (IBAction)operatorPressed:(UIButton *)sender {
@@ -89,7 +97,7 @@
 
 - (IBAction)enterPressed {
     
-    
+    [self setIsTypingANumber:FALSE];
     NSNumber *result = [[self calculator] evaluate:[self equation]];
     self.display.text = [self.display.text stringByAppendingFormat: @"%@\n", [self displayAnswer:result]];
     [self setEquation:nil];
