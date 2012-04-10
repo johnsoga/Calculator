@@ -36,9 +36,10 @@
     int length = [[answer stringValue] length];
     NSString *display = [[NSString alloc] init];
     int i = 0;
+    int spaceToFill = SCREEN_WIDTH-length;
     display = [display stringByAppendingString:@"\n"];
     
-    for(i = 0; i < SCREEN_WIDTH-length; i++) {
+    for(i = 0; i < spaceToFill; i++) {
         display = [display stringByAppendingString:@" "];
     }
     display = [display stringByAppendingString:[answer stringValue]];

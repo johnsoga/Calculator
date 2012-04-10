@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "MyCalculator/CalculatorModel.m"
-         timestampString = "355648950.525158"
+         timestampString = "355721443.327487"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "118"
-         endingLineNumber = "118"
+         startingLineNumber = "112"
+         endingLineNumber = "112"
          landmarkName = "-doMath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "MyCalculator/CalculatorModel.m"
-         timestampString = "355648950.525158"
+         timestampString = "355721443.327487"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "131"
-         endingLineNumber = "131"
+         startingLineNumber = "125"
+         endingLineNumber = "125"
          landmarkName = "-evaluate:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "MyCalculator/CalculatorModel.m"
-         timestampString = "355648950.525158"
+         timestampString = "355721443.327487"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "160"
-         endingLineNumber = "160"
+         startingLineNumber = "172"
+         endingLineNumber = "172"
+         landmarkName = "-shuntingYard:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "MyCalculator/CalculatorModel.m"
+         timestampString = "355723231.985119"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "184"
+         endingLineNumber = "184"
          landmarkName = "-shuntingYard:"
          landmarkType = "5">
       </FileBreakpoint>

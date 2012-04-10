@@ -15,10 +15,11 @@
 @property (nonatomic, strong) Queue *queue;
 @property (nonatomic, strong) Stack *result;
 -(BOOL)isNumber:(NSString *)token;
--(BOOL)isNegative:(NSString *)token atIndex:(NSInteger)index;
 -(void)shuntingYard:(NSString *)expression;
 -(BOOL)isOperator:(NSString *)token;
 -(void)doMath:(NSString *)token;
+-(NSUInteger)operandPrecedence:(NSString *)operand;
+-(BOOL)leftAssociative:(NSString *)operand;
 @end
 
 
@@ -45,26 +46,19 @@
 }
 
 
--(BOOL)isNegative:(NSString *)token atIndex:(NSInteger)index {
+-(NSUInteger)operandPrecedence:(NSString *)operand {
     
-    NSRange range = {index-1,1};
-    NSString *prev = [token substringWithRange:range];  
-    
-    if ([token isEqualToString:@"-"]) {
-        if (index == 0) {
-            return YES;
-        } else if(index > 0) {
-            if (!([prev isEqualToString:@"0"] || [prev isEqualToString:@"1"] ||
-                [prev isEqualToString:@"2"] || [prev isEqualToString:@"3"] ||
-                [prev isEqualToString:@"4"] || [prev isEqualToString:@"5"] ||
-                [prev isEqualToString:@"6"] || [prev isEqualToString:@"7"] ||
-                [prev isEqualToString:@"8"] || [prev isEqualToString:@"9"])) {
-                return YES;
-            }
-        }
+    if ([operand isEqualToString:@"!"]) {
+        return 4;
+    } else if ([operand isEqualToString:@"*"] || [operand isEqualToString:@"/"] || [operand isEqualToString:@"%"]) {
+        return 3;
+    } else if ([operand isEqualToString:@"+"] || [operand isEqualToString:@"-"]) {
+        return 2;
+    } else if ([operand isEqualToString:@"="]) {
+        return 1;
     }
     
-    return NO;
+    return 0;
 }
 
 
@@ -149,10 +143,28 @@
 }
 
 
+-(BOOL)leftAssociative:(NSString *)operand {
+    
+    if ([operand isEqualToString:@"*"] || [operand isEqualToString:@"/"] ||
+        [operand isEqualToString:@"+"] || [operand isEqualToString:@"-"] ||
+        [operand isEqualToString:@"%"]) {
+        
+        return TRUE;
+    } else if ([operand isEqualToString:@"="] || [operand isEqualToString:@"!"]) {
+        
+        return FALSE;
+    }
+    
+    return false;
+}
+
+
 -(void)shuntingYard:(NSString *)expression {
 
     NSUInteger length = [expression length];
     NSInteger index = 0;
+    NSString *op1;
+    NSString *op2;
     NSString *token;
     NSArray *tokens;
 
@@ -167,11 +179,14 @@
         if ([self isNumber:token]) {
             [_queue enqueue:[NSNumber numberWithDouble:[token doubleValue]]];
         } else if ([self isOperator:token]) {
-            while (![_stack isEmpty]) {
-                if ([self isOperator: [_stack peek]]) {
-                    [_queue enqueue:[_stack pop]];
-                }
+            op1 = token;
+            while ([self isOperator:(op2 = [_stack peek])] &&
+                   (([self leftAssociative:op1] && ([self operandPrecedence:op1] <= [self operandPrecedence:op2])) ||
+                    (![self leftAssociative:op1] && ([self operandPrecedence:op1] < [self operandPrecedence:op2])))) {
+            
+                       [_queue enqueue:[_stack pop]];
             }
+            
             [_stack push:token];
         }
         index++;
